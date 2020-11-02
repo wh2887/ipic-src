@@ -1,6 +1,7 @@
 import './App.css'
 import React from 'react'
 import {Switch, Route} from 'react-router-dom'
+import './index.scss'
 
 import Home from 'pages/Home'
 import History from './pages/History'

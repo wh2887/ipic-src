@@ -13,10 +13,6 @@ const Nav = styled.nav`
   text-align: center;
 `
 
-const StyledButton = styled(Button)`
-  background: red;
-`
-
 const Header = () => {
   return (
     <StyledRow>
