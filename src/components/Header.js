@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import svg from 'logo.svg'
 console.log(svg)
 
-
 const StyledRow = styled(Row)`
   background: #343A40;
 `
