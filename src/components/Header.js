@@ -1,5 +1,5 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink,useHistory} from 'react-router-dom'
 import {Row, Col} from 'antd'
 import styled from 'styled-components'
 
@@ -15,7 +15,6 @@ const StyledImg = styled.img`
   max-width: 64px;
   padding: .3em;
 `
-
 const StyledNav = styled.nav`
   text-align: center;
   display:flex;
@@ -41,7 +40,6 @@ const StyledNavLink = styled(NavLink)`
     }
   }
 `
-
 const StyledButtons = styled.div`
   display:flex;
   flex-direction: row;
@@ -49,7 +47,6 @@ const StyledButtons = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 `
-
 const StyledButton = styled.button`
   margin: 0 .2em;
   padding: 6px 8px;
@@ -69,6 +66,16 @@ const StyledButton = styled.button`
 `
 
 const Header = () => {
+  const history = useHistory()
+
+  const handleLogin = () => {
+    history.push("/login")
+  }
+  const handleRegister = () => {
+    history.push("/register")
+  }
+
+
   return (
     <StyledRow>
       <Col span={1} offset={3}>
@@ -83,8 +90,8 @@ const Header = () => {
       </Col>
       <Col span={3}>
         <StyledButtons>
-          <StyledButton>登录</StyledButton>
-          <StyledButton>注册</StyledButton>
+          <StyledButton onClick={handleLogin}>登录</StyledButton>
+          <StyledButton onClick={handleRegister}>注册</StyledButton>
         </StyledButtons>
       </Col>
       <Col span={3}>

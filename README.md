@@ -26,9 +26,13 @@ ipic 项目是我在学习了 React 基础之后做的第一个练习项目。�
 BrowserRouter、HashRouter是 React-Router 中的两种模式。 
  **BrowserRouter** 需要服务器支持，是比较友好美观的方式。此方法适用于**create-react-app**的开发环境中。因为有个本地服务器，可配置。
 
-而 **HashRouter** 是将当前位置存储在URL的哈希部分中。因为哈希永远不会发送到服务器，这就不需要服务器的配置。我发布到 github-pages 上时会将路由模式切换到 BrowserRouter
+而 **HashRouter** 是将当前位置存储在URL的哈希部分中。因为哈希永远不会发送到服务器，这就不需要服务器的配置。我发布到 github-pages 上时会将路由模式切换到 BrowserRouter  
 
-本项目将 App 组件在 index.js 文件中使用 Router 包裹。然后在 App 组件中写路由匹配与导航切换。
+官方文档中还介绍了一种**memory history**内存历史记录实现，可用于测试和非DOM环境（例如React Native）。
+
+本项目将 App 组件在 index.js 文件中使用 Router 包裹。然后在 App 组件中写路由匹配与导航切换。按钮的跳转页面功能使用 react-router-dom 包中的 useHistory Hooks 来实现。
+useHistory挂钩使您可以访问可用于导航的历史记录实例。
+
 - exact 表示首页
 - 导航是 to 表示跳转的路由
 - 路由匹配是用 path + component 属性
