@@ -10,7 +10,6 @@ const StyledRow = styled(Row)`
   background: #343A40;
   display:flex;
   align-items: center;
-  font-size: 22px;
 `
 const StyledImg = styled.img`
   max-width: 64px;
@@ -29,10 +28,17 @@ const StyledNav = styled.nav`
 `
 const StyledNavLink = styled(NavLink)`
   margin-left: 3em;
-  border-bottom: 1px solid transparent;
   padding-bottom: .2em;
   &.active{
-  border-bottom: 1px solid #bbbfca;
+  position: relative;
+    &:after{
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      padding-bottom: .1em;
+      border-bottom: 1px solid #bbbfca;
+    }
   }
 `
 
@@ -46,8 +52,7 @@ const StyledButtons = styled.div`
 
 const StyledButton = styled.button`
   margin: 0 .2em;
-  padding: .5em 1em;
-  font-size: 16px;
+  padding: 6px 8px;
   text-align: center;
   color: white;
   display:flex;
@@ -56,10 +61,10 @@ const StyledButton = styled.button`
   background: #28ABB9;
   border-radius: 4px;
   &:hover{
-  background: rgba(40,171,185,.8);
+    background: rgba(40,171,185,.8);
   }
   &:active{
-  background: rgba(40,171,185,.6);
+    background: rgba(40,171,185,.6);
   }
 `
 
