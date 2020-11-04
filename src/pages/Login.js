@@ -93,7 +93,7 @@ const Login = () => {
                       <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                       </Button>
-                      <Button type="primary" htmlType="register" className="login-form-button">
+                      <Button type="primary"  className="login-form-button">
                         注册
                       </Button>
                     </Space>
