@@ -1,9 +1,11 @@
-import React from 'react'
-import {NavLink,useHistory} from 'react-router-dom'
+import React, {useContext} from 'react'
+import {NavLink} from 'react-router-dom'
 import {Row, Col} from 'antd'
 import styled from 'styled-components'
 
 import svg from 'logo.svg'
+import Login from '../pages/Login'
+import Context from '../stores'
 
 
 const StyledRow = styled(Row)`
@@ -66,16 +68,13 @@ const StyledButton = styled.button`
 `
 
 const Header = () => {
-  const history = useHistory()
+  const {visible, dispatch} = useContext(Context)
 
   const handleLogin = () => {
-    history.push("/login")
+    dispatch({type: 'drawerToggle', visible: true})
   }
   const handleRegister = () => {
-    history.push("/register")
   }
-
-
   return (
     <StyledRow>
       <Col span={1} offset={3}>
@@ -97,6 +96,7 @@ const Header = () => {
       <Col span={3}>
 
       </Col>
+      <Login/>
     </StyledRow>
   )
 }
