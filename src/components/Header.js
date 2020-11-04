@@ -96,7 +96,6 @@ const Header = () => {
         </StyledButtons>
       </Col>
       <Col span={3}>
-
       </Col>
       <Login/>
       <Register/>
