@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import svg from 'logo.svg'
 import Login from '../pages/Login'
 import Context from '../stores'
+import Register from '../pages/Register'
 
 
 const StyledRow = styled(Row)`
@@ -71,9 +72,10 @@ const Header = () => {
   const {visible,dispatch} = useContext(Context)
 
   const handleLogin = () => {
-    dispatch({type: 'drawerToggle', visible: true})
+    dispatch({type: 'drawerToggleLogin', loginVisible: true})
   }
   const handleRegister = () => {
+    dispatch({type:'drawerToggleRegister',registerVisible: true})
   }
   return (
     <StyledRow>
@@ -97,6 +99,7 @@ const Header = () => {
 
       </Col>
       <Login/>
+      <Register/>
     </StyledRow>
   )
 }

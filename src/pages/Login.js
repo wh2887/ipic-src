@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {Button, Col, Drawer, Form, Input, Row,Space} from 'antd'
+import {Button, Col, Drawer, Form, Input, Row, Space} from 'antd'
 import Context from '../stores'
 import styled from 'styled-components'
 
@@ -18,7 +18,11 @@ const Login = () => {
   const {visible, dispatch} = useContext(Context)
 
   const onClose = () => {
-    dispatch({type: 'drawerToggle', visible: false})
+    dispatch({type: 'drawerToggleLogin', loginVisible: false})
+  }
+  const handleRegister = () => {
+    dispatch({type: 'drawerToggleLogin', loginVisible: false})
+    dispatch({type: 'drawerToggleRegister', registerVisible: true})
   }
 
   const onFinish = (values) => {
@@ -40,9 +44,9 @@ const Login = () => {
         title="登录"
         placement="top"
         key="top"
-        headerStyle={{textAlign:"center"}}
+        headerStyle={{textAlign: 'center'}}
         height="auto"
-        visible={visible.visible}
+        visible={visible.loginVisible}
         closable={true}
         onClose={onClose}
         destroyOnClose={true}
@@ -93,7 +97,7 @@ const Login = () => {
                       <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                       </Button>
-                      <Button type="primary"  className="login-form-button">
+                      <Button type="primary" className="login-form-button" onClick={handleRegister}>
                         注册
                       </Button>
                     </Space>

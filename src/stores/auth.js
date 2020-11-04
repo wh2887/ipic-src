@@ -1,7 +1,8 @@
 import React from 'react'
 
 const AuthStore = {
-  visible: false
+  loginVisible: false,
+  registerVisible: false
 }
 
 window.AuthStore = AuthStore

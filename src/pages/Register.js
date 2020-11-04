@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {Button, Col, Drawer, Form, Input, Row,Space} from 'antd'
+import {Button, Col, Drawer, Form, Input, Row, Space} from 'antd'
 import Context from '../stores'
 import styled from 'styled-components'
 
@@ -18,7 +18,7 @@ const Register = () => {
   const {visible, dispatch} = useContext(Context)
 
   const onClose = () => {
-    dispatch({type: 'drawerToggle', visible: false})
+    dispatch({type: 'drawerToggleRegister', registerVisible: false})
   }
 
   const onFinish = (values) => {
@@ -35,8 +35,8 @@ const Register = () => {
   }
 
   const validateConfirm = ({getFieldValue}) => ({
-    validator(rule,value){
-      if (getFieldValue('password')=== value) return Promise.resolve()
+    validator(rule, value) {
+      if (getFieldValue('password') === value) return Promise.resolve()
       return Promise.reject('两次密码不一致')
     }
   })
@@ -44,12 +44,12 @@ const Register = () => {
   return (
     <StyledDrawerWrapper>
       <Drawer
-        title="登录"
+        title="注册"
         placement="top"
         key="top"
-        headerStyle={{textAlign:"center"}}
+        headerStyle={{textAlign: 'center'}}
         height="auto"
-        visible={visible.visible}
+        visible={visible.registerVisible}
         closable={true}
         onClose={onClose}
         destroyOnClose={true}
@@ -91,16 +91,16 @@ const Register = () => {
                     <Input.Password/>
                   </Form.Item>
                 </Col>
-                <Col>
+                <Col span={24}>
                   <Form.Item
                     label="确认密码"
                     name="conformPassword"
                     rules={[
-                      {required:true,message:'再次确认密码！'},
+                      {required: true, message: '再次确认密码！'},
                       validateConfirm
                     ]}
                   >
-                  <Input.Password />
+                    <Input.Password/>
                   </Form.Item>
                 </Col>
               </Row>
@@ -110,9 +110,6 @@ const Register = () => {
                   <Form.Item>
                     <Space size="small">
                       <Button type="primary" htmlType="submit" className="login-form-button">
-                        登录
-                      </Button>
-                      <Button type="primary"  className="login-form-button">
                         注册
                       </Button>
                     </Space>

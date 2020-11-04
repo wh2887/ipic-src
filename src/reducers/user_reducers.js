@@ -1,5 +1,8 @@
 export default {
-  'drawerToggle': (state, action) => {
-    return {...state, visible: action.visible}
+  'drawerToggleLogin': (state, action) => {
+    return {...state, loginVisible: action.loginVisible}
+  },
+  'drawerToggleRegister': (state, action) => {
+    return {...state, registerVisible: action.registerVisible}
   },
 }
