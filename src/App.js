@@ -6,23 +6,26 @@ import History from './pages/History'
 import About from './pages/About'
 import Header from './components/Header'
 import Context from './stores'
-import user_reducers from './reducers/user_reducers'
+import userReducer from './reducers/user_reducers'
 import AuthStore from './stores/auth'
 
-const store = {
-  visible: false
+
+const obj = {
+  ...userReducer,
 }
 
-const reducer = (state,action) => {
-  switch (action.type){
-    case "drawerToggle":
-      return {...state,visible:action.visible}
+const reducer = (state, action) => {
+  const fn = obj[action.type]
+  if (fn) {
+    return fn(state, action)
+  } else {
+    throw new Error('未知类型')
   }
 }
 
 function App() {
-  const [ visible,dispatch ] = useReducer(reducer,store)
-  const api = {visible,dispatch}
+  const [visible, dispatch] = useReducer(reducer, AuthStore)
+  const api = {visible, dispatch}
   return (
     <Context.Provider value={api}>
       <div className="App">
@@ -32,6 +35,7 @@ function App() {
           <Route path='/history' component={History}/>
           <Route path='/about' component={About}/>
         </Switch>
+
       </div>
     </Context.Provider>
   )

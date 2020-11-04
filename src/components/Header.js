@@ -68,7 +68,7 @@ const StyledButton = styled.button`
 `
 
 const Header = () => {
-  const {visible, dispatch} = useContext(Context)
+  const {visible,dispatch} = useContext(Context)
 
   const handleLogin = () => {
     dispatch({type: 'drawerToggle', visible: true})
