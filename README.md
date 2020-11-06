@@ -74,13 +74,12 @@ const App = () => {
 ## 开发
 开发流程大致分为：
 1. 页面功能分析
-2. 页面效果设计
-3. 页面基础布局
-4. 接入后台
-5. 页面功能实现
-6. 测试功能
-7. 优化代码及设计
-8. 发布产品上线
+2. 页面基础布局
+3. 接入后台
+4. 页面功能实现
+5. 测试功能
+6. 优化代码及设计
+7. 发布产品上线
 
 ### 1. 页面功能分析
 此图床项目的功能核心在上传图片，再反馈给用户线上地址预览。对于上传图片不能无限制的上传，所以需要有用户对应，以此来限制用户的上传量。或者单个文件的大小等。对于图床项目的拓展，可以提供一个修改图片尺寸的功能。大致就是这些。简单总结就是：用户登录、注册、注销，上传图片，文件限制，转换在线图片，修改图片尺寸大小。
@@ -107,6 +106,27 @@ const App = () => {
       )
     }
     ```
+**懒加载**功能应该是网页必须的优化之一。在构建应用时我们需要关注代码包中所包含的代码，以避免因体积过大而导致加载时间过长。打包工具（如Webpack）就能提供代码分割，代码分割了就能实现动态按需加载。在初始加载的时候减少所需加载的代码量，能够显著地提高你的应用性能。  
+React 中提供了一种方式，**React.lazy & Suspense** 技术，它目前还不支持服务端的渲染，服务端渲染推荐 Loadable Components 这个库。  
+**React.lazy** 函数能让你像渲染常规组件一样处理动态引入（的组件）。使用方法如下：
+```jsx
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+```
+此代码会在页面首次渲染时自动导入相应的组件包。React.lazy 接收一个函数，这个函数需要动态调用import()，它必须返回一个 Promise，该 Promise 需要 resolve 一个 default export 的 React 组件。然后应在 **Suspense** 组件中渲染 lazy 组件，如此使得我们可以使用在等待加载 lazy 组件时做优雅降级（如 loading 指示器等）。
+```jsx
+import React, { Suspense } from 'react';
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <OtherComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
 
 7. 如上所述，已经完成了全局数据与操作，都共享给了这个 Provider 内部组件了。使用时只需要使用 useContext 获取读写的 API，然后进行相应的操作即可。
     ```jsx

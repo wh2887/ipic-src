@@ -1,13 +1,11 @@
 import './App.css'
-import React, {useReducer} from 'react'
+import React, {useReducer, Suspense, lazy} from 'react'
 import {Switch, Route} from 'react-router-dom'
-import Home from 'pages/Home'
-import History from './pages/History'
-import About from './pages/About'
 import Header from './components/Header'
 import Context from './stores'
 import userReducer from './reducers/user_reducers'
 import AuthStore from './stores/auth'
+import Loading from './components/Loading'
 
 
 const obj = {
@@ -23,6 +21,10 @@ const reducer = (state, action) => {
   }
 }
 
+const Home = lazy(() => import('pages/Home'))
+const History = lazy(() => import('pages/History'))
+const About = lazy(() => import('pages/About'))
+
 function App() {
   const [visible, dispatch] = useReducer(reducer, AuthStore)
   const api = {visible, dispatch}
@@ -30,11 +32,14 @@ function App() {
     <Context.Provider value={api}>
       <div className="App">
         <Header/>
-        <Switch>
-          <Route path='/' component={Home} exact/>
-          <Route path='/history' component={History}/>
-          <Route path='/about' component={About}/>
-        </Switch>
+        <Suspense fallback={<Loading size="large"/>}>
+          <Switch>
+            <Route path='/' component={Home} exact/>
+            <Route path='/history' component={History}/>
+            <Route path='/about' component={About}/>
+          </Switch>
+
+        </Suspense>
 
       </div>
     </Context.Provider>
