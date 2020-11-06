@@ -1,7 +1,13 @@
 import React from 'react'
+import AV from 'modules'
 
 const Home = () => {
-  return <div>Home</div>
+  console.log('AV:',AV)
+  return (
+    <div>
+      Home
+    </div>
+  )
 }
 
 export default Home
