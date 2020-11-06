@@ -1,7 +1,9 @@
 import React, {useContext} from 'react'
-import {Button, Col, Drawer, Form, Input, Row, Space} from 'antd'
+import {Button, Col, Drawer, Form, Input, Row, Space, message} from 'antd'
 import Context from '../stores'
 import styled from 'styled-components'
+import AuthStore from '../stores/auth'
+import {useHistory} from 'react-router-dom'
 
 const StyledDrawerWrapper = styled.div`
   text-align: center;
@@ -16,13 +18,24 @@ const layout = {
 
 const Register = () => {
   const {visible, dispatch} = useContext(Context)
+  const history = useHistory()
 
   const onClose = () => {
     dispatch({type: 'drawerToggleRegister', registerVisible: false})
   }
 
   const onFinish = (values) => {
-    console.log('Form组件返回成功：', values)
+    AuthStore.setUsername(values.username)
+    AuthStore.setPassword(values.password)
+    AuthStore.register()
+      .then(user => {
+        dispatch({type: 'drawerToggleRegister', registerVisible: false})
+        history.push('/')
+      })
+      .catch(error => {
+          message.error('注册失败')
+        }
+      )
   }
   const onFinishFailed = (error) => {
     console.log('Form组件返回失败:', error)

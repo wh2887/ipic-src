@@ -6,6 +6,22 @@ AV.init({
   serverURL: 'https://xiphqnnf.lc-cn-n1-shared.com'
 })
 
+const Auth = {
+  register(username, password) {
+    let user = new User()
+    user.setUsername(username)
+    user.setPassword(password)
+    return new Promise((resolve, reject) => {
+      user.signUp().then(
+        loginedUser => resolve(loginedUser),
+        error => reject(error)
+      )
+    })
+  },
+  getCurrentUser() {
+    return User.current()
+  }
+}
 
-export default AV
+export {Auth}
 
