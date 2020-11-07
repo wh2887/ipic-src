@@ -20,6 +20,9 @@ const Auth = {
   },
   getCurrentUser() {
     return User.current()
+  },
+  logout(){
+    User.logOut()
   }
 }
 

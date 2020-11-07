@@ -1,12 +1,13 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {NavLink} from 'react-router-dom'
-import {Row, Col} from 'antd'
+import {Row, Col, Tag} from 'antd'
 import styled from 'styled-components'
-
 import svg from 'logo.svg'
 import Login from '../pages/Login'
 import Context from '../stores'
 import Register from '../pages/Register'
+import UserStore from '../stores/user'
+import AuthStore from '../stores/auth'
 
 
 const StyledRow = styled(Row)`
@@ -69,14 +70,22 @@ const StyledButton = styled.button`
 `
 
 const Header = () => {
-  const {visible,dispatch} = useContext(Context)
+  const {visible, dispatch} = useContext(Context)
 
   const handleLogin = () => {
     dispatch({type: 'drawerToggleLogin', loginVisible: true})
   }
   const handleRegister = () => {
-    dispatch({type:'drawerToggleRegister',registerVisible: true})
+    dispatch({type: 'drawerToggleRegister', registerVisible: true})
   }
+  const handleReset = () => {
+    AuthStore.logout()
+  }
+
+  useEffect(() => {
+    UserStore.pullUser()
+  }, [])
+
   return (
     <StyledRow>
       <Col span={1} offset={3}>
@@ -90,10 +99,21 @@ const Header = () => {
         </StyledNav>
       </Col>
       <Col span={3}>
-        <StyledButtons>
-          <StyledButton onClick={handleLogin}>登录</StyledButton>
-          <StyledButton onClick={handleRegister}>注册</StyledButton>
-        </StyledButtons>
+        {
+          UserStore.currentUser ? (
+            <StyledButtons>
+              <Tag color="geekblue">
+                {UserStore.currentUser.attributes.username}
+              </Tag>
+              <StyledButton onClick={handleReset}>注销</StyledButton>
+            </StyledButtons>
+          ) : (
+            <StyledButtons>
+              <StyledButton onClick={handleLogin}>登录</StyledButton>
+              <StyledButton onClick={handleRegister}>注册</StyledButton>
+            </StyledButtons>
+          )
+        }
       </Col>
       <Col span={3}>
       </Col>

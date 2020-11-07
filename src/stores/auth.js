@@ -1,7 +1,6 @@
 import React from 'react'
 import {Auth} from '../modules'
 import UserStore from './user'
-import {User} from 'leancloud-storage'
 
 const AuthStore = {
   loginVisible: false,
@@ -27,7 +26,12 @@ const AuthStore = {
         reject(error)
       })
     })
+  },
+  logout(){
+    Auth.logout()
+    UserStore.resetUser()
   }
+
 }
 
 
