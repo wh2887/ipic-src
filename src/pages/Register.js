@@ -1,6 +1,5 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {Button, Col, Drawer, Form, Input, Row, Space, message} from 'antd'
-import Context from '../stores'
 import styled from 'styled-components'
 import AuthStore from '../stores/auth'
 import {useHistory} from 'react-router-dom'
@@ -9,19 +8,16 @@ const StyledDrawerWrapper = styled.div`
   text-align: center;
   overflow: hidden;
 `
-
 const layout = {
   labelCol: {span: 9},
   wrapperCol: {span: 6},
 }
 
-
-const Register = () => {
-  const {visible, dispatch} = useContext(Context)
+const Register = (props) => {
   const history = useHistory()
-
+  console.log('注册组件更新了')
   const onClose = () => {
-    dispatch({type: 'drawerToggleRegister', registerVisible: false})
+    props.onClick()
   }
 
   const onFinish = (values) => {
@@ -29,7 +25,6 @@ const Register = () => {
     AuthStore.setPassword(values.password)
     AuthStore.register()
       .then(user => {
-        dispatch({type: 'drawerToggleRegister', registerVisible: false})
         history.push('/')
       })
       .catch(error => {
@@ -62,7 +57,7 @@ const Register = () => {
         key="top"
         headerStyle={{textAlign: 'center'}}
         height="auto"
-        visible={visible.registerVisible}
+        visible={props.visible}
         closable={true}
         onClose={onClose}
         destroyOnClose={true}
@@ -137,4 +132,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default React.memo(Register)

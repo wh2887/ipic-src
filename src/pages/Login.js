@@ -1,6 +1,5 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {Button, Col, Drawer, Form, Input, Row, Space} from 'antd'
-import Context from '../stores'
 import styled from 'styled-components'
 
 const StyledDrawerWrapper = styled.div`
@@ -14,15 +13,14 @@ const layout = {
 }
 
 
-const Login = () => {
-  const {visible, dispatch} = useContext(Context)
+const Login = (props) => {
+  console.log('Login组件更新了')
 
   const onClose = () => {
-    dispatch({type: 'drawerToggleLogin', loginVisible: false})
+    props.onClick()
   }
   const handleRegister = () => {
-    dispatch({type: 'drawerToggleLogin', loginVisible: false})
-    dispatch({type: 'drawerToggleRegister', registerVisible: true})
+    props.onRegister()
   }
 
   const onFinish = (values) => {
@@ -46,7 +44,7 @@ const Login = () => {
         key="top"
         headerStyle={{textAlign: 'center'}}
         height="auto"
-        visible={visible.loginVisible}
+        visible={props.visible}
         closable={true}
         onClose={onClose}
         destroyOnClose={true}
@@ -112,4 +110,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default React.memo(Login)

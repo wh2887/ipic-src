@@ -1,14 +1,12 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useEffect, useState, lazy, Suspense, useRef, useMemo} from 'react'
 import {NavLink} from 'react-router-dom'
 import {Row, Col, Tag} from 'antd'
 import styled from 'styled-components'
 import svg from 'logo.svg'
-import Login from '../pages/Login'
-import Context from '../stores'
-import Register from '../pages/Register'
 import UserStore from '../stores/user'
-import AuthStore from '../stores/auth'
 
+const Login = lazy(() => import('pages/Login'))
+const Register = lazy(() => import('pages/Register'))
 
 const StyledRow = styled(Row)`
   background: #343A40;
@@ -70,22 +68,33 @@ const StyledButton = styled.button`
 `
 
 const Header = () => {
-  const {visible, dispatch} = useContext(Context)
-
-  const handleLogin = () => {
-    dispatch({type: 'drawerToggleLogin', loginVisible: true})
-  }
-  const handleRegister = () => {
-    dispatch({type: 'drawerToggleRegister', registerVisible: true})
-  }
-  const handleReset = () => {
-    AuthStore.logout()
-  }
+  const renderRef = useRef(0)
+  const [loginVisible, setLoginVisible] = useState(false)
+  const [registerVisible, setRegisterVisible] = useState(false)
+  renderRef.current += 1
 
   useEffect(() => {
-    UserStore.pullUser()
   }, [])
 
+  const handleLogin = () => {
+    return setLoginVisible(() => true)
+  }
+
+  const onLoginClose = useMemo(() => {
+    return () => setLoginVisible(() => false)
+  }, [loginVisible])
+
+  const handleRegister = () => {
+    onLoginClose()
+    setRegisterVisible(() => true)
+  }
+
+  const onRegisterClose = useMemo(() => {
+    return () => setRegisterVisible(() => false)
+  }, [registerVisible])
+
+  const handleReset = () => {
+  }
   return (
     <StyledRow>
       <Col span={1} offset={3}>
@@ -117,8 +126,17 @@ const Header = () => {
       </Col>
       <Col span={3}>
       </Col>
-      <Login/>
-      <Register/>
+      <Suspense fallback={<div>Loading...</div>}>
+        {renderRef.current > 1 ? <>
+          {
+            loginVisible ? <Login visible={loginVisible} onClick={onLoginClose} onRegister={handleRegister}/> : null
+          }
+          {
+            registerVisible ? <Register visible={registerVisible} onClick={onRegisterClose}/> : null
+          }
+        </> : null
+        }
+      </Suspense>
     </StyledRow>
   )
 }
